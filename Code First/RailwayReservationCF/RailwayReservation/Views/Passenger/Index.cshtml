@@ -1,0 +1,219 @@
+﻿@model PagedList.IPagedList<RailwayReservation.Models.ViewModels.PassengerViewModel>
+@using PagedList.Mvc;
+
+
+@{
+//ViewBag.Title = " | Index";
+}
+
+@*<form class="form-inline my-2 my-lg-0">
+    @using (Html.BeginForm("Index", "Passenger", FormMethod.Get))
+    {
+        @Html.TextBox("SearchString", null, htmlAttributes: new { @class = "form-control", @type = "search", @placeholder = "Search" })
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+        <p class="my-3">
+            <div class="input-group">
+                <div class="form-outline">
+                    @Html.TextBox("SearchString", null, htmlAttributes: new { @class = "form-control", @type = "search", @placeholder = "Search Product" })
+                </div>
+                <button type="submit" class="btn btn-warning" style="height:38px;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </p>
+
+    }
+</form>*@
+<div class="container-fluid">
+    <div class="my-5">
+        <div class="row">
+            <p class="m-3">
+                <a href="#" class="btn btn-outline-secondary" name="btnAddModal" data-bs-toggle="modal" data-bs-target="#CreatePassengerModal">Add Passenger</a>
+            </p>
+            <div class="row">
+                @using (Html.BeginForm("Index", "Passenger", FormMethod.Get))
+                {
+                    <p>
+                        ⌕ Search Here : @Html.TextBox("SearchString")
+                        <input type="submit" value="Search" class="btn btn-info" />
+                    </p>
+
+                }
+            </div>
+            <h2></h2>
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        @*<th>Passenger ID </th>*@
+                        <th>@Html.ActionLink("Passenger Name", "Index", new { SortOrder = ViewBag.SortNameParam })</th>
+                        @*<th>Passenger Name </th>*@
+                        <th>Passenger Email </th>
+                        @*<th>Passenger Phone </th>*@
+                        <th>Journey Date </th>
+                        @*<th>Train No </th>*@
+                        <th>Train Name </th>
+                        <th>Route Name </th>
+                        <th>Class Name </th>
+                        <th>Fare </th>
+                        <th>Image </th>
+                        <th>Operations</th>
+                    </tr>
+                    @foreach (var item in Model)
+                     {
+                        <tr>
+                            @*<td>@Html.DisplayFor(modelItem => item.PassengerID)</td>*@
+                            <td>@Html.DisplayFor(modelItem => item.PassengerName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PassengerEmail)</td>
+                            @*<td>@Html.DisplayFor(modelItem => item.PassengerPhone)</td>*@
+                            <td>
+                                @Convert.ToString(string.Format("{0:dd-MMM-yyyy}", item.JourneyDate))
+                            </td>
+
+                            @*<td>@Html.DisplayFor(modelItem => item.TrainNo)</td>*@
+                            <td>@Html.DisplayFor(modelItem => item.TrainName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.RouteName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ClassName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Fare)</td>
+                            <td>
+                                <img src="@Url.Content(item.ImageUrl)" alt="@item.ImageName" height="100" width="100" />
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary" name="btnEditModal" onclick='EditPassenger("+@item.PassengerID+")' data-bs-toggle="modal" data-bs-target="#EditPassengerModal">Edit</a>
+                                <a href="#" class="btn btn-danger" name="btnDeleteModal" onclick='DeletePassenger("+@item.PassengerID+")' data-bs-toggle="modal" data-bs-target="#DeletePassengerModal">Delete</a>
+                                <a href="#" class="btn btn-info" name="details" onclick='PassengerDetails("+@item.PassengerID+")' data-bs-toggle="modal" data-bs-target="#PassengerDetailsModal">Details</a>
+                            </td>
+                        </tr>
+                     }
+                </table>
+                <br />
+                Page@(Model.PageCount<Model.PageNumber?0:Model.PageNumber)of @Model.PageCount
+                @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, SortOrder = ViewBag.CurrentSort, CurrentFilter = ViewBag.CurrentFilter }))
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="CreatePassengerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Add Passenger</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @{Html.RenderAction("Insert");}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditPassengerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Edit Passenger</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="partialDivEdit">
+                        @if (ViewBag.Details == "Show")
+                         {
+                            @Html.Partial("_EditPassenger", Model);
+                            ViewBag.Details = "";
+                         }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="DeletePassengerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Delete Passenger</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="partialDivDelete">
+                        @if (ViewBag.Details == "Show")
+                         {
+                            @Html.Partial("_DeletePassenger", Model);
+                            ViewBag.Details = "";
+                         }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="PassengerDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Passenger Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="partialDivDetails">
+                        @if (ViewBag.Details == "Show")
+                         {
+                            @Html.Partial("_PassengerDetails", Model)
+                            ViewBag.Details = "";
+                         }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <script>
+            function EditPassenger(passengerid) {
+                $.ajax({
+                    url: "/Passenger/Edit?id=" + passengerid,
+                    type: "GET",
+                    data: "",
+                    contentType: 'application/json; charset = utf-8',
+                    success: function (data) {
+                        $('#partialDivEdit').show();
+                        $('#partialDivEdit').html(data);
+                    },
+                    error: function () {
+                        alert("Error occured")
+                    }
+                });
+            }
+
+            function DeletePassenger(passengerid) {
+                $.ajax({
+                    url: "/Passenger/Delete?id=" + passengerid,
+                    type: "GET",
+                    data: "",
+                    contentType: 'application/json; charset = utf-8',
+                    success: function (data) {
+                        $('#partialDivDelete').show();
+                        $('#partialDivDelete').html(data);
+                    },
+                    error: function () {
+                        alert("Error occured")
+                    }
+                });
+            }
+
+            function PassengerDetails(passengerid) {
+                $.ajax({
+                    url: "/Passenger/Details?id=" + passengerid,
+                    type: "GET",
+                    data: "",
+                    contentType: 'application/json; charset = utf-8',
+                    success: function (data) {
+                        $('#partialDivDetails').show();
+                        $('#partialDivDetails').html(data);
+                    },
+                    error: function () {
+                        alert("Error occured")
+                    }
+                });
+            }
+        </script>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<RailwayReservation.Models.Passenger>
+
+@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Passenger Reports</h2>
+<div style="padding:10px; border:1px solid black">
+    <div><a href="@Url.Action("PassengerReport", new { id="PDF"})">Get Report In PDF</a></div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Passenger Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Journey Date
+        </th>
+        <th>
+            Train Name
+        </th>
+        <th>
+            Route Name
+        </th>
+        <th>
+            Class Name
+        </th>
+        <th>
+            Fare
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PassengerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PassengerEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JourneyDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Train.TrainName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Route.RouteName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.Fare)
+            </td>
+        </tr>
+    }
+
+</table>
+

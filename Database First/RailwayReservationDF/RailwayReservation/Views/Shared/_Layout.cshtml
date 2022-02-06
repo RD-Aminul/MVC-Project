@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh Railway  @ViewBag.Title</title>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="font-weight: bold">Bangladesh Railway</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse nav justify-content-end" id="navbarSupportedContent">
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="#" style="text-decoration:none" class="navbar-text">Welcome - @User.Identity.Name</a>
+                    <ul class="nav nav-tabs">
+
+                        <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Create Train", "CreateTrain", "Train", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Create Route", "CreateRoute", "Route", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Create Class", "CreateClass", "Class", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Passenger Info", "Index", "Passenger", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Report", "Reports", "Passenger", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Logout", "logout", "Account", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">@Html.ActionLink("Sign Up", "SignUp", "Account", new { area = "" }, new { @class = "nav-link active" })</li>
+                        <li class="nav-item">@Html.ActionLink("Login", "login", "Account", new { area = "" }, new { @class = "nav-link active" })</li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+    <div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/CustomScript.js"></script>
+</body>
+</html>

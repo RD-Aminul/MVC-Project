@@ -1,0 +1,44 @@
+﻿@model List<RailwayReservation.Models.UserRoleViewModel>
+@{
+    ViewBag.Title = "UserInRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var id = ViewBag.RoleId;
+}
+
+<h2>Role Wise User</h2>
+<form method="post">
+    <div class="row">
+        <br />
+        <table class="table table-bordered">
+            <tr>
+                <td colspan="2"><h1>Role Name: @ViewBag.RoleName</h1></td>
+            </tr>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    @Html.HiddenFor(u => Model[i].UserId);
+                    @Html.HiddenFor(u => Model[i].UserName);
+                    <td>
+                        @if (Model[i].IsSelected)
+                        {
+                            @Html.CheckBoxFor(u => Model[i].IsSelected, new { @checked = "checked", @disabled = "disabled" })
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(u => Model[i].IsSelected, new { @disabled = "disabled" })
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(u => Model[i].UserName)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="row">
+        @Html.ActionLink("Go to List", "Index", "Administratior", null, new { @class = "btn btn-primary " })
+    </div>
+</form>
+

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<RailwayReservation.Models.Train>
+
+<h2>Train Details</h2>
+<div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <td colspan="2"><h6 class="text-danger">Page Loading @@ : @DateTime.Now.ToString()</h6></td>
+        </tr>
+        <tr>
+            <th>Train No</th>
+            <th>TrainName</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TrainNo</td>
+                <td>@item.TrainName</td>
+            </tr>
+        }
+    </table>
+</div>

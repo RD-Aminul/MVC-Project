@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse nav justify-content-end" id="navbarSupportedContent">
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav nav-tabs justify-content-end navbar-text" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <ul class="nav nav-tabs justify-content-end">
+                        <li>
+                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @Style = "text-decoration:none", @class = "navbar-text" })
+                        </li>
+
+                        <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Create Train", "CreateTrain", "Train", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Create Route", "CreateRoute", "Route", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Create Class", "CreateClass", "Class", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Passenger Info", "Index", "Passenger", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li class="nav-item">@Html.ActionLink("Report", "Reports", "Passenger", new { area = "" }, new { @class = "nav-link active text-end" })</li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()" style="text-decoration:none">Log off</a></li>
+                    </ul>
+                }
+            }
+            else
+            {
+                <ul class="nav nav-tabs justify-content-end">
+                    <li class="nav-item">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link active text-end" })</li>
+                    <li class="nav-item">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link active text-end" })</li>
+                </ul>
+            }
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,46 @@
+﻿@model RailwayReservation.Models.ViewModels.PassengerViewModel
+
+
+<div class="col-md-12 mx-auto">
+     <h2>Passenger Details</h2>
+    @*<div class="form-group mb-3">
+        @Html.LabelFor(model => model.PassengerID, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.PassengerID, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+    </div>*@
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.PassengerName, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.PassengerName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.PassengerEmail, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.PassengerEmail, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.PassengerPhone, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.PassengerPhone, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.JourneyDate, htmlAttributes: new { @class = "form-label" })
+        @Html.EditorFor(model => model.JourneyDate, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.TrainNo, htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.TrainNo, new SelectList(ViewBag.Trains, "TrainNo", "TrainName"), new { @class = "form-select", @disabled = "disabled" })
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.RouteID, htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.RouteID, new SelectList(ViewBag.Routes, "RouteID", "RouteName"), new { @class = "form-select", @disabled = "disabled" })
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.ClassID, htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.ClassID, new SelectList(ViewBag.Classs, "ClassID", "ClassName"), new { @class = "form-select", @disabled = "disabled" })
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.ClassID, htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownListFor(model => model.ClassID, new SelectList(ViewBag.Classs, "ClassID", "Fare"), new { @class = "form-select", @disabled = "disabled" })
+    </div>
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "form-label  mb-3" })<br />
+        <img src="@Url.Content(Model.ImageUrl)" alt="@Model.ImageName" height="120" width="110" class="changeEdit" />
+    </div>
+</div>
